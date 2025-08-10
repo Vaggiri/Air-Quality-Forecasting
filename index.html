@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - IoT Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #000000;
+            overflow: hidden;
+        }
+        .login-container {
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+        .form-input:focus {
+            border-color: #00ff00;
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.5), 0 0 10px rgba(0, 255, 0, 0.7) inset;
+            outline: none;
+        }
+        /* --- Vortex Transition Animation (Updated Speed) --- */
+        .vortex-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 2.5s ease-in-out;
+        }
+        .vortex-container.vortex-active {
+            opacity: 1;
+        }
+        .vortex-shape {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2vmax;
+            height: 2vmax;
+            background: linear-gradient(45deg, #00ff00, #000);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            transform-origin: center;
+            animation: vortex-spin 2.5s forwards; /* Slower animation */
+        }
+        @keyframes vortex-spin {
+            0% {
+                transform: translate(-50%, -50%) scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(100) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="vortex-container" class="vortex-container"></div>
+
+    <div id="login-container" class="login-container flex items-center justify-center min-h-screen">
+        <form id="login-form" class="w-full max-w-xs p-8 space-y-6">
+            <div class="text-center mb-8">
+                <i class="fas fa-city text-5xl text-green-400"></i>
+                <h1 class="text-2xl font-bold text-white mt-4">Smart City Access</h1>
+            </div>
+            
+            <input id="username" type="text" placeholder="Username" class="form-input w-full p-3 bg-gray-800 border-2 border-gray-700 rounded-lg text-white transition-all duration-300">
+            
+            <input id="password" type="password" placeholder="Password" class="form-input w-full p-3 bg-gray-800 border-2 border-gray-700 rounded-lg text-white transition-all duration-300">
+            
+            <button type="submit" class="w-full p-3 bg-green-500 text-black font-bold rounded-lg hover:bg-green-400 transition-colors duration-300">
+                Login
+            </button>
+            
+            <p id="error-message" class="text-red-500 text-center text-sm h-4"></p>
+        </form>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('login-form');
+        const errorMessage = document.getElementById('error-message');
+        const vortexContainer = document.getElementById('vortex-container');
+        const loginContainer = document.getElementById('login-container');
+
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === 'admin_gjr' && password === 'admin@1234') {
+                errorMessage.textContent = '';
+				localStorage.setItem('isLoggedIn', 'true');
+                
+                // --- Start the transition ---
+                loginContainer.style.opacity = '0';
+                loginContainer.style.transform = 'scale(0.8)';
+                vortexContainer.classList.add('vortex-active');
+
+                // Reduced number of shapes for smoother performance
+                for (let i = 0; i < 5; i++) {
+                    const shape = document.createElement('div');
+                    shape.classList.add('vortex-shape');
+                    shape.style.animationDelay = `${i * 0.1}s`;
+                    vortexContainer.appendChild(shape);
+                }
+				
+                // Wait for the animation to complete, then redirect
+                setTimeout(() => {
+                    window.location.href = 'dash.html';
+                }, 2500); // Changed to 2.5 seconds
+
+            } else {
+                errorMessage.textContent = 'Invalid username or password.';
+                setTimeout(() => {
+                    document.getElementById('username').value = '';
+                    document.getElementById('password').value = '';
+                    errorMessage.textContent = '';
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>

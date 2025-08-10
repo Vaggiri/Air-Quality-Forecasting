@@ -1,0 +1,179 @@
+/* CSS variables for themes */
+:root {
+  --color-bg: #f9fafb;
+  --color-card: #ffffff;
+  --color-card-header: #f0f6ff;
+  --color-border: #e5e7eb;
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #6b7280;
+  --color-header-bg: linear-gradient(to right, #2563eb, #1d4ed8);
+  --color-header-text: #ffffff;
+  --color-header-accent: #1e40af;
+  --color-primary: #2563eb;
+  --color-shadow: rgba(0, 0, 0, 0.1);
+}
+[data-theme='dark'] {
+  --color-bg: #111827;
+  --color-card: #1f2937;
+  --color-card-header: #374151;
+  --color-border: #374151;
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #9ca3af;
+  --color-header-bg: #1f2937;
+  --color-header-text: #ffffff;
+  --color-header-accent: #374151;
+  --color-primary: #3b82f6;
+  --color-shadow: rgba(255, 255, 255, 0.08);
+}
+
+/* Header with theme-aware shadow */
+header {
+    box-shadow: 0 4px 6px -1px var(--color-shadow), 0 2px 4px -2px var(--color-shadow);
+}
+
+/* Base Body Styles */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+}
+
+/* --- Theme-Aware Utility Classes --- */
+.bg-header { background: var(--color-header-bg); }
+.bg-card { background-color: var(--color-card); }
+.text-text-primary { color: var(--color-text-primary); }
+.text-text-secondary { color: var(--color-text-secondary); }
+.border-border { border-color: var(--color-border); }
+.text-header-text { color: var(--color-header-text); }
+.text-header-subtext { color: var(--color-header-text); opacity: 0.8; }
+
+/* --- Dark Mode Leaflet Popup Styles --- */
+[data-theme='dark'] .leaflet-popup-content-wrapper {
+    background-color: var(--color-card-header);
+    color: var(--color-text-primary);
+}
+[data-theme='dark'] .leaflet-popup-tip {
+    background: var(--color-card-header);
+}
+[data-theme='dark'] .leaflet-tile-pane { 
+    filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7); 
+}
+
+/* --- CSS Gauge Styles --- */
+.gauge { 
+    width: 100%; 
+    height: 100px; 
+    position: relative; 
+}
+.gauge-body { 
+    width: 100%; 
+    height: 0; 
+    padding-bottom: 50%; 
+    background: #e0e0e0; 
+    position: relative; 
+    border-top-left-radius: 100% 200%; 
+    border-top-right-radius: 100% 200%; 
+    overflow: hidden; 
+}
+.gauge-fill { 
+    position: absolute; 
+    top: 100%; 
+    left: 0; 
+    width: inherit; 
+    height: 100%; 
+    background: linear-gradient(to right, #1E88E5, #43A047, #D81B60); 
+    transform-origin: center top; 
+    transform: rotate(0.25turn); 
+    transition: transform 0.2s; 
+}
+.gauge-cover { 
+    width: 75%; 
+    height: 150%; 
+    background: var(--color-card); 
+    border-radius: 50%; 
+    position: absolute; 
+    top: 25%; 
+    left: 12.5%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding-bottom: 25%; 
+    box-sizing: border-box; 
+    font-size: 1.75rem; 
+    font-weight: bold; 
+    color: var(--color-text-primary); 
+}
+.gauge-cover > span { 
+    font-size: 0.8rem; 
+    font-weight: normal; 
+    margin-left: 2px; 
+}
+
+/* Enhanced Gauge Labels */
+.gauge-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+.gauge-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+}
+.gauge-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+.gauge-unit {
+    background-color: var(--color-card-header);
+    padding: 0.15rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.7rem;
+}
+
+/* Styles for filter dropdowns */
+.filter-select {
+    background-color: var(--color-card-header);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    border-radius: 0.5rem;
+    padding: 0.5rem 2rem 0.5rem 0.75rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 1.5em 1.5em;
+}
+
+/* Tab Styles */
+.tab-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  border-bottom: 2px solid transparent;
+  border-radius: 6px 6px 0 0;
+  transform: translateY(1px);
+  transition: all 0.2s ease-in-out;
+}
+.tab-button:hover {
+  color: var(--color-primary);
+  background-color: var(--color-card-header);
+}
+.tab-button.tab-active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  background-color: var(--color-card);
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
+}
+
+/* Other Styles */
+@keyframes ripple-in { from { clip-path: circle(0% at var(--ripple-x) var(--ripple-y)); } to { clip-path: circle(150% at var(--ripple-x) var(--ripple-y)); } }
+::view-transition-new(root) { animation: ripple-in 1.2s ease-in-out; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 1.2s; }
+#map { height: 200px; }
+#theme-switcher-btn { box-shadow: none !important; }
